@@ -1,6 +1,6 @@
 <template>
   <div id="controller">
-    <v-btn elevation="0" color="primary" fab tile @click="toggleVisible">
+    <v-btn elevation="0" fab tile @click="toggleVisible">
       <v-icon>mdi-unfold-{{ visible ? "less" : "more" }}-vertical</v-icon>
     </v-btn>
     <div id="control-center" :class="{ hidden: !visible }">

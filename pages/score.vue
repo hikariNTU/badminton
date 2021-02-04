@@ -1,12 +1,17 @@
 <template>
   <div class="score-tab-container" ref="score" v-resize="getHeight">
-    <Court :lt="height" :height="height" serve="rt" />
+    <CourtVis :height="height" v-if="showCourt" />
     <Score />
     <Controller>
-      <v-btn>something</v-btn>
-      <v-btn>is</v-btn>
+      <v-btn elevation="0" fab tile @click="showCourt = !showCourt">
+        <v-icon>mdi-{{ showCourt ? "grid" : "grid-off" }}</v-icon>
+      </v-btn>
+      <PlayersForm />
       <v-btn elevation="0" color="secondary" fab tile @click="clearAll">
         <v-icon>mdi-delete</v-icon>
+      </v-btn>
+      <v-btn elevation="0" fab tile @click="swap">
+        <v-icon>mdi-swap-horizontal-variant</v-icon>
       </v-btn>
     </Controller>
   </div>
@@ -14,11 +19,12 @@
 
 <script>
 import Score from "../components/Score";
-import Court from "../components/Court";
+import CourtVis from "../components/CourtVisualizer";
 import Controller from "../components/Controller";
+import PlayersForm from "../components/PlayersForm";
 
 export default {
-  components: [Score, Court, Controller],
+  components: { Score, CourtVis, Controller, PlayersForm },
   props: {
     minusHeight: {
       // Will be minus from given height?
@@ -29,6 +35,7 @@ export default {
   data() {
     return {
       height: "0",
+      showCourt: true,
     };
   },
   mounted() {
@@ -47,6 +54,9 @@ export default {
     },
     clearAll() {
       this.$store.dispatch("current/clearWho", "all");
+    },
+    swap() {
+      this.$store.commit("current/swap");
     },
   },
 };

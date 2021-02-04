@@ -114,7 +114,6 @@ export default {
   all: unset;
   position: relative;
   display: grid;
-  font-size: small;
   width: calc(610 * var(--len) - 2 * var(--gap));
   height: calc(1340 * var(--len) - 2 * var(--gap));
   background: white;
@@ -148,6 +147,9 @@ export default {
     box-sizing: border-box;
     &.serve {
       background: var(--serve-color, #922);
+      color: black;
+      font-size: large;
+      font-weight: 700;
     }
   }
 }
