@@ -76,6 +76,7 @@ export default {
   methods: {
     dispatchScore(who, value = 1) {
       this.$store.commit("current/addScore", [who, value]);
+      this.$store.dispatch("current/gainScore", who);
     },
     clearScore(who) {
       if (!who) {

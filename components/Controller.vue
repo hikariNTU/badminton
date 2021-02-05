@@ -3,7 +3,12 @@
     <v-btn elevation="0" fab tile @click="toggleVisible">
       <v-icon>mdi-unfold-{{ visible ? "less" : "more" }}-vertical</v-icon>
     </v-btn>
-    <div id="control-center" :class="{ hidden: !visible }">
+    <div
+      id="control-center"
+      :class="{ hidden: !visible }"
+      :tabindex="visible ? null : 0"
+      @focus="visible = true"
+    >
       <slot />
     </div>
   </div>
@@ -42,7 +47,7 @@ export default {
   > #control-center {
     display: flex;
     overflow: hidden;
-    max-width: 100vw;
+    max-width: calc(4 * 60px);
     transition: max-width 0.2s;
     &.hidden {
       max-width: 0;
@@ -51,7 +56,8 @@ export default {
   transition: opacity 0.2s;
   opacity: 0.5;
   &:hover,
-  &:focus {
+  &:focus,
+  &:focus-within {
     opacity: 1;
   }
 }

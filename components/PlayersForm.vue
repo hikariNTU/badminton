@@ -104,7 +104,7 @@
 import { merge } from "lodash";
 export default {
   data: () => ({
-    dialog: true,
+    dialog: false,
     isSingle: false,
     gender: "M",
     limit: 21,
