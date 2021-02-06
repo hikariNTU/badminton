@@ -6,21 +6,26 @@
       <v-btn elevation="0" fab tile @click="showCourt = !showCourt">
         <v-icon>mdi-{{ showCourt ? "grid" : "grid-off" }}</v-icon>
       </v-btn>
-      <v-btn elevation="0" fab tile @click="swap" title="swap court">
+      <v-btn elevation="0" fab tile @click="swap">
         <v-icon>mdi-swap-vertical-variant</v-icon>
+      </v-btn>
+      <v-btn elevation="0" fab tile @click="undo">
+        <v-icon>mdi-undo</v-icon>
       </v-btn>
       <PlayersForm />
       <v-btn elevation="0" class="red darken-4" fab tile @click="clearAll">
         <v-icon>mdi-delete</v-icon>
       </v-btn>
     </Controller>
-    <div class="d-flex flex-column pa-10 red darken-4">
+    <div class="d-flex flex-column pa-10 red darken-4" v-if='false'>
       <div>Length: {{ len }}</div>
       <div>First: {{ firstPoint }}</div>
       <div>Second: {{ secondPoint }}</div>
       <div>FS: {{ firstSwap }}</div>
       <div>SS: {{ secondSwap }}</div>
       <div>servingSide: {{ servingSide }}</div>
+      <div>Pos: {{ posName }}</div>
+      <!-- <Court v-bind="posName" height='30rem'/> -->
     </div>
   </div>
 </template>
@@ -28,6 +33,7 @@
 <script>
 import Score from "../components/Score";
 import CourtVis from "../components/CourtVisualizer";
+import Court from "../components/Court";
 import Controller from "../components/Controller";
 import PlayersForm from "../components/PlayersForm";
 
@@ -56,6 +62,7 @@ export default {
       "firstSwap",
       "secondSwap",
       "servingSide",
+      "posName",
     ]),
   },
   mounted() {
@@ -78,6 +85,9 @@ export default {
     },
     swap() {
       this.$store.commit("current/swap");
+    },
+    undo() {
+      this.$store.commit("current/deleteScore");
     },
   },
 };

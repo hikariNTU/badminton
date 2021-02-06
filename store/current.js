@@ -1,37 +1,30 @@
-import { merge } from 'lodash'
-
 export const state = () => ({
   first: {
     name: ['冰淇淋', '楊桃樹'],
     team: "TPE, Chinese Taipei",
-    serve: false,
-    match: 0,
-    score: 0,
-    posSwitch: false,
-    ops: 'second',
+    reversed: false,
   },
   second: {
-    name: ['二組戴姿穎', '二組右邊'],
+    name: ['二組接發', '二組'],
     team: "台灣代表隊",
-    serve: false,
-    match: 0,
-    score: 0,
-    posSwitch: false,
-    ops: 'first'
+    reversed: false,
   },
+  // Setting:
   isSingle: false,
-  swapCourt: false,
   gender: "M",
   limit: 21,
   deuceGap: 1,
   deuceLimit: 30,
-  swapPoint: 11,
+  // Scoring
+  prevGames: [],
   score: [],
-  prevScore: [],
+  // Position Status
+  swapCourt: false,
   firstServe: -1,
 })
 
 const getPos = (isSwitch = false, isSwap = false) => {
+  // Return calculated pos-label from given status
   if (isSwitch) {
     if (isSwap) {
       return "lb"
@@ -47,39 +40,65 @@ const getPos = (isSwitch = false, isSwap = false) => {
   }
 }
 
+const swapCalculator = target => (acc, current, idx, arr) => {
+  // Calculate exchange position from given score list.
+  if (current === target) {
+    const last = idx ? arr[idx - 1] : state.firstServe;
+    if (last === current) {
+      acc ^= 1
+    }
+  }
+  return acc
+}
+const [firstSwapCalc, secondSwapCalc] = [swapCalculator(0), swapCalculator(1)]
+
 export const getters = {
   len: state => state.score.length,
   secondPoint: state => state?.score?.reduce((a, b) => a + b, 0),
   firstPoint: (state, getters) => getters.len - getters.secondPoint,
-  firstSwap: (state) => state.score.reduce(
-    (acc, current, idx, arr) => {
-      if (current === 0) {
-        const last = idx ? arr[idx - 1] : state.firstServe;
-        if (last === current) {
-          acc ^= 1
+  firstGamePoint: (state, getters) => {
+    return state.prevGames.reduce(
+      (acc, current) => {
+        if (current.winner === 0) {
+          acc += 1
         }
-      }
-      return acc
-    },
-    0
-  ),
-  secondSwap: (state) => state.score.reduce(
-    (acc, current, idx, arr) => {
-      if (current === 1) {
-        const last = idx ? arr[idx - 1] : state.firstServe;
-        if (last === current) {
-          acc ^= 1
-        }
-      }
-      return acc
-    },
-    0
-  ),
+        return acc
+      }, 0)
+  },
+  secondGamePoint: (state, getters) => state.prevGames.length - getters.firstGamePoint,
+  firstSwap: (state) => state.score.reduce(firstSwapCalc, 0),
+  secondSwap: (state) => state.score.reduce(secondSwapCalc, 0),
   servingSide: (state, getters) => {
     return getters.len ? state.score[getters.len - 1] : state.firstServe
   },
-  posName: (state, getters) => {
-    return null
+  posName: ({ isSingle, swapCourt, first, second, firstServe, ...state }, getters) => {
+    const pos = {}
+    const { servingSide } = getters
+    let servingPoint = 0
+    if (servingSide === 0) {
+      servingPoint = getters.firstPoint;
+    } else if (servingSide === 1) {
+      servingPoint = getters.secondPoint;
+    }
+    if (servingSide !== -1) {
+      pos['serve'] = getPos(servingPoint % 2, swapCourt ^ servingSide)
+    }
+    if (isSingle) {
+      // Single
+      Object.assign(pos, {
+        [getPos(servingPoint % 2, swapCourt)]: first.name[0],
+        [getPos(servingPoint % 2, !swapCourt)]: second.name[0],
+      })
+    } else {
+      // Double?
+      Object.assign(pos, {
+        [getPos(getters.firstSwap, swapCourt)]: first.name[0 ^ first.reversed],
+        [getPos(!getters.firstSwap, swapCourt)]: first.name[1 ^ first.reversed],
+        [getPos(getters.secondSwap, !swapCourt)]: second.name[0 ^ second.reversed],
+        [getPos(!getters.secondSwap, !swapCourt)]: second.name[1 ^ second.reversed],
+      })
+    }
+    return pos
   }
 }
 
@@ -88,33 +107,6 @@ export const getters = {
 export const mutations = {
   swap(state) {
     state.swapCourt = !state.swapCourt
-  },
-  addScore(state, [who, value = 1]) {
-    const me = state[who]
-    const ops = state[me.ops]
-
-    me.score += value
-    if (value >= 1) {
-      if (me.serve && !state.isSingle) {
-        me.posSwitch = !me.posSwitch
-      }
-      me.serve = true
-      ops.serve = false
-    } else {
-      me.serve = false
-      ops.serve = false
-    }
-    if (
-      me.score >= state.limit &&
-      me.score > ops.score + state.deuceGap ||
-      me.score >= state.deuceLimit
-    ) {
-      me.match++
-      me.score = 0
-      ops.score = 0
-      me.serve = false
-      ops.serve = false
-    }
   },
   writeScore(state, value) {
     state.score.push(value)
@@ -126,21 +118,17 @@ export const mutations = {
       state.score.pop()
     }
   },
-  saveMatch(state, payload) {
-    state.prevScore.push(payload)
+  saveGame(state, payload) {
+    state.prevGames.push(payload)
   },
-  clear(state, who) {
-    const me = state[who]
-    if (!me) {
-      return
+  deleteGame(state, all = false) {
+    if (all) {
+      state.prevGames.splice(0)
+    } else {
+      state.prevGames.pop()
     }
-    me.score = 0
-    me.match = 0
-    me.serve = false
-    me.posSwitch = false
-    state.swapCourt = false
   },
-  changePlayers(state, payload) {
+  applyMatch(state, payload) {
     const { first, second, ...normal } = payload
     const { name: firstName, ...restFirst } = first
     const { name: secondName, ...restSecond } = second
@@ -151,18 +139,37 @@ export const mutations = {
     Object.assign(state.second, restSecond)
     state.second.name.splice(0)
     state.second.name.push(...secondName)
+  },
+  setFirstServe(state, who) {
+    switch (who) {
+      case 'first':
+      case 0:
+        state.firstServe = 0;
+        break;
+      case 'second':
+      case 1:
+        state.firstServe = 1;
+        break;
+      default:
+        console.warn(`[${who}] is not valid argv for serving.`)
+        return
+    }
   }
 }
 
 export const actions = {
   clearWho({ commit }, who) {
     if (who === 'all') {
-      commit('clear', 'first');
-      commit('clear', 'second');
+      // commit('clear', 'first');
+      // commit('clear', 'second');
       commit('deleteScore', true);
+      commit('deleteGame', true);
     } else {
-      commit('clear', who)
+      // commit('clear', who)
     }
+  },
+  saveCurrentGame() {
+
   },
   gainScore({ commit, getters, state }, who) {
     switch (who) {
@@ -183,15 +190,22 @@ export const actions = {
         Math.abs(getters.firstPoint - getters.secondPoint) > state.deuceGap) ||
       max >= state.deuceLimit
     ) {
-      const match = {
+      const game = {
         score: state.score,
         firstServe: state.firstServe,
         winner: (getters.firstPoint > getters.secondPoint) ? 0 : 1
       }
-      console.log(JSON.parse(JSON.stringify(match)))
+      console.log(JSON.parse(JSON.stringify(game)))
 
-      commit('saveMatch', JSON.parse(JSON.stringify(match)))
+      commit('saveGame', JSON.parse(JSON.stringify(game)))
       commit('deleteScore', true);
     }
+  },
+  submitMatch({ commit }, payload) {
+    if (payload.isSingle) {
+      payload.first.name.splice(1)
+      payload.second.name.splice(1)
+    }
+    commit('applyMatch', payload)
   }
 }

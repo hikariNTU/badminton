@@ -1,50 +1,33 @@
 
 <template>
-  <div class="score-container" @mousedown.middle.prevent="clearScore()">
-    <div class="name">
-      <div>{{ first.name.join(" | ") }}</div>
-      <div>{{ first.subName }}</div>
-      <div>{{ first.team }}</div>
-    </div>
-    <div class="game">{{ first.match }}</div>
-    <div
-      class="score"
-      @click="dispatchScore('first', 1)"
-      @contextmenu.prevent="dispatchScore('first', -1)"
-      :active="first.serve"
-    >
-      {{ first.score }}
-    </div>
-    <div class="name">
-      <div>{{ second.name.join(" | ") }}</div>
-      <div>{{ second.subName }}</div>
-      <div>{{ second.team }}</div>
-    </div>
-    <div class="game">{{ second.match }}</div>
-    <div
-      class="score"
-      @click="dispatchScore('second')"
-      @contextmenu.prevent="dispatchScore('second', -1)"
-      :active="second.serve"
-    >
-      {{ second.score }}
-    </div>
+  <div class="score-container">
+    <template v-for="(team, who) in { first, second }">
+      <div class="name" :key="who + '-name'">
+        <div>{{ team.name.join(" | ") }}</div>
+        <div>{{ team.subName }}</div>
+        <div>{{ team.team }}</div>
+      </div>
+      <div class="game" :key="who + '-game'">
+        {{ who === "first" ? firstGamePoint : secondGamePoint }}
+      </div>
+      <div
+        class="score"
+        @click="dispatchScore(who, 1)"
+        @contextmenu.prevent="deleteScore"
+        :active="servingSide === (who === 'first' ? 0 : 1)"
+        :key="who + '-score'"
+      >
+        {{ who === "first" ? firstPoint : secondPoint }}
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapState } from "vuex";
+
 export default {
-  name: "HelloWorld",
-  props: {
-    limit: {
-      default: 21,
-      type: Number,
-    },
-    deuce: {
-      default: 1,
-      type: Number,
-    },
-  },
+  name: "ScoringTab",
   data() {
     return {
       // first: {
@@ -72,19 +55,20 @@ export default {
     second() {
       return this.$store.state.current.second;
     },
+    ...mapGetters("current", [
+      "firstPoint",
+      "secondPoint",
+      "firstGamePoint",
+      "secondGamePoint",
+      "servingSide",
+    ]),
   },
   methods: {
     dispatchScore(who, value = 1) {
-      this.$store.commit("current/addScore", [who, value]);
       this.$store.dispatch("current/gainScore", who);
     },
-    clearScore(who) {
-      if (!who) {
-        this.$store.commit("current/clear", "first");
-        this.$store.commit("current/clear", "second");
-      } else {
-        this.$store.commit("current/clear", who);
-      }
+    deleteScore() {
+      this.$store.commit("current/deleteScore");
     },
   },
 };
@@ -149,7 +133,7 @@ $h: 100vh;
     align-items: start;
     justify-content: center;
     text-align: left;
-    font-size: $h/16;
+    font-size: $h/24;
     > div:nth-last-child(1) {
       margin-top: auto;
     }

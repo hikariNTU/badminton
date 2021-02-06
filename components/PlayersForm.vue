@@ -8,9 +8,9 @@
       </template>
       <v-card>
         <v-card-title>
-          <span class="headline"
-            >Match Setting - {{ gender }}{{ isSingle ? "S" : "D" }}</span
-          >
+          <span class="headline">
+            Match Setting - {{ gender }}{{ isSingle ? "S" : "D" }}
+          </span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -27,7 +27,7 @@
                   <template v-slot:label> Gender </template>
                   <v-radio label="Man" value="M" />
                   <v-radio label="Woman" value="F" />
-                  <v-radio :disabled="isSingle" label="Mixed" value="X" />
+                  <v-radio label="Mixed" value="X" />
                 </v-radio-group>
               </v-col>
             </v-row>
@@ -35,6 +35,7 @@
               <v-col cols="12" md="6">
                 <v-radio-group row v-model="limit">
                   <template v-slot:label> Score Limit </template>
+                  <v-radio label="15" :value="15" />
                   <v-radio label="21" :value="21" />
                   <v-radio label="31" :value="31" />
                 </v-radio-group>
@@ -56,14 +57,8 @@
                 </h2>
               </v-row>
               <v-row :key="`${idx}-team`">
-                <v-col cols="8">
-                  <v-text-field
-                    label="Team Name"
-                    v-model="team.team"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="4">
-                  <v-switch label="Serving" v-model="team.serve" />
+                <v-col cols="12">
+                  <v-text-field label="Team Name" v-model="team.team" />
                 </v-col>
               </v-row>
               <v-row :key="`${idx}-name`">
@@ -104,29 +99,20 @@
 import { merge } from "lodash";
 export default {
   data: () => ({
-    dialog: false,
+    dialog: true,
     isSingle: false,
     gender: "M",
     limit: 21,
     deuceLimit: 30,
     first: {
       name: ["fasf", "hahaeh"],
+      subName: "Tai tsu in",
       team: "ehse, erh erh",
-      serve: false,
-      match: 0,
-      score: 0,
-      posSwitch: false,
-      ops: "second",
     },
     second: {
       name: ["帶姿尹", "2nd"],
       subName: "Tai tsu in",
       team: "台灣",
-      serve: false,
-      match: 0,
-      score: 0,
-      posSwitch: false,
-      ops: "first",
     },
   }),
   mounted() {
@@ -135,8 +121,6 @@ export default {
   watch: {
     dialog() {
       if (this.dialog) {
-        // merge(this.first, this.$store.state.current.first);
-        // merge(this.second, this.$store.state.current.second);
         this.fetchFromStore();
       }
     },
@@ -153,11 +137,20 @@ export default {
   },
   methods: {
     fetchFromStore() {
-      merge(this.$data, this.$store.state.current);
+      const current = this.$store.state.current;
+      const { first, second, isSingle, gender, limit, deuceLimit } = current;
+      merge(this.$data, {
+        first,
+        second,
+        isSingle,
+        gender,
+        limit,
+        deuceLimit,
+      });
     },
     submitForm() {
       const { dialog, ...payload } = this.$data;
-      this.$store.commit("current/changePlayers", payload);
+      this.$store.dispatch("current/submitMatch", payload);
       this.dialog = false;
     },
   },
