@@ -1,5 +1,11 @@
 <template>
   <v-app dark>
+    <style>
+      html,
+      body {
+        overflow: hidden;
+      }
+    </style>
     <v-main>
       <Nuxt />
     </v-main>
@@ -9,3 +15,4 @@
 <script>
 export default {};
 </script>
+

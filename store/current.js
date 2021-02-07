@@ -1,12 +1,12 @@
 export const state = () => ({
   first: {
     name: ['冰淇淋', '楊桃樹'],
-    team: "TPE, Chinese Taipei",
+    team: "Green College",
     reversed: false,
   },
   second: {
     name: ['二組接發', '二組'],
-    team: "台灣代表隊",
+    team: "Orange Apple",
     reversed: false,
   },
   // Setting:
@@ -53,6 +53,17 @@ const swapCalculator = target => (acc, current, idx, arr) => {
 const [firstSwapCalc, secondSwapCalc] = [swapCalculator(0), swapCalculator(1)]
 
 export const getters = {
+  generalSetting: state => {
+    return {
+      isSingle: state.isSingle,
+      gender: state.gender,
+      limit: state.limit,
+      deuceGap: state.deuceGap,
+      deuceLimit: state.deuceLimit,
+      swapCourt: state.swapCourt,
+      firstServe: state.firstServe,
+    }
+  },
   len: state => state.score.length,
   secondPoint: state => state?.score?.reduce((a, b) => a + b, 0),
   firstPoint: (state, getters) => getters.len - getters.secondPoint,
@@ -152,17 +163,17 @@ export const mutations = {
     Object.assign(state, normal)
     Object.assign(state.first, restFirst)
     state.first.name.splice(0)
-    state.first.name.concat(firstName)
+    state.first.name.push(...firstName)
     Object.assign(state.second, restSecond)
     state.second.name.splice(0)
-    state.second.name.concat(secondName)
+    state.second.name.push(...secondName)
   },
   mergePlayer(state, { target, payload }) {
-    if (['first', 'second'].contains(target)) {
+    if (['first', 'second'].includes(target)) {
       const { name = null, ...rest } = payload
       if (name !== null) {
         state[target].name.splice(0)
-        state[target].name.concat(name)
+        state[target].name.push(...name)
       }
       Object.assign(state[target], rest)
     }
@@ -172,12 +183,12 @@ export const mutations = {
   },
   mergeScoring(state, payload) {
     state.score.splice(0)
-    state.score.concat(payload)
+    state.score.push(...payload)
   },
   mergePrevGames(state, payload) {
     // Did Score Reacting?
     state.prevGames.splice(0)
-    state.prevGames.concat(payload)
+    state.prevGames.push(...payload)
   },
   setFirstServe(state, who) {
     switch (who) {

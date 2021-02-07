@@ -44,6 +44,10 @@ export default {
       default: "95vh",
       type: String,
     },
+    reversed: {
+      default: false,
+      type: Boolean,
+    },
   },
   render: (h, { props }) => {
     const cells = range(1, 22);
@@ -82,6 +86,18 @@ export default {
           return props.noNumber ? "" : where;
       }
     });
+
+    const childrenArr = cellsName.map((v, idx) => {
+      if (serveArea(idx + 1)) {
+        return h("div", { class: "serve" }, v);
+      } else {
+        return h("div", v);
+      }
+    });
+    if (props.reversed) {
+      childrenArr.reverse();
+    }
+
     return h(
       "div",
       {
@@ -92,13 +108,7 @@ export default {
           "--height": props.height,
         },
       },
-      cellsName.map((v, idx) => {
-        if (serveArea(idx + 1)) {
-          return h("div", { class: "serve" }, v);
-        } else {
-          return h("div", v);
-        }
-      })
+      childrenArr
     );
   },
 };
@@ -154,7 +164,6 @@ export default {
     &.serve {
       background: var(--serve-color, #922);
       color: black;
-      font-size: large;
       font-weight: 700;
     }
   }

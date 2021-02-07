@@ -1,6 +1,7 @@
 <template>
   <div class="score-tab-container" ref="score" v-resize="getHeight">
     <CourtVis :height="height" v-if="showCourt" />
+    <Broadcaster v-if="broadcast" :show-grid="showCourt" />
     <Score />
     <Controller>
       <v-btn elevation="0" fab tile @click="showCourt = !showCourt">
@@ -11,6 +12,15 @@
       </v-btn>
       <v-btn elevation="0" fab tile @click="undo">
         <v-icon>mdi-undo</v-icon>
+      </v-btn>
+      <v-btn
+        elevation="0"
+        :color="broadcast ? 'green' : null"
+        fab
+        tile
+        @click="broadcast = !broadcast"
+      >
+        <v-icon>mdi-monitor-share</v-icon>
       </v-btn>
       <PlayersForm />
       <v-btn elevation="0" class="red darken-4" fab tile @click="clearAll">
@@ -27,7 +37,6 @@
       <div>Pos: {{ posName }}</div>
       <!-- <Court v-bind="posName" height='30rem'/> -->
     </div>
-    <Broadcaster v-if='broadcast'/>
   </div>
 </template>
 
@@ -54,9 +63,7 @@ export default {
     return {
       height: "0",
       showCourt: false,
-      syncScore: true,
-      broadcaster: null,
-      broadcast: true,
+      broadcast: false,
     };
   },
   computed: {

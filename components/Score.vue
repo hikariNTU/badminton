@@ -16,6 +16,7 @@
         @contextmenu.prevent="deleteScore"
         :active="servingSide === (who === 'first' ? 0 : 1)"
         :key="who + '-score'"
+        controllable
       >
         {{ who === "first" ? firstPoint : secondPoint }}
       </div>
@@ -28,6 +29,12 @@ import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "ScoringTab",
+  props: {
+    readOnly: {
+      default: false,
+      type: Boolean,
+    },
+  },
   data() {
     return {
       // first: {
@@ -95,10 +102,16 @@ $h: 100vh;
     &:nth-child(3)[active] {
       color: #000;
       background: greenyellow;
+      &[controllable]:hover {
+        background: #cefb8a;
+      }
     }
     &:nth-last-child(1)[active] {
       color: #000;
       background: orangered;
+      &[controllable]:hover {
+        background: #ff9873;
+      }
     }
   }
   > hr {
@@ -117,13 +130,15 @@ $h: 100vh;
   > .score {
     font-size: $h / 3;
     line-height: 0;
-    user-select: none;
-    cursor: pointer;
     transition: background-color 0.15s;
-    &:hover {
-      background-color: #19191955;
-      &:active {
-        background-color: #0005;
+    &[controllable] {
+      user-select: none;
+      cursor: pointer;
+      &:hover {
+        background-color: #6665;
+        &:active {
+          background-color: #0005;
+        }
       }
     }
   }
