@@ -138,6 +138,12 @@ export default {
   :nth-child(13) {
     grid-column: span 2;
   }
+  :nth-child(6),
+  :nth-child(7),
+  :nth-child(16),
+  :nth-child(17) {
+    font-size: 1.5em;
+  }
   > div {
     color: white;
     display: flex;

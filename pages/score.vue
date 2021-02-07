@@ -17,7 +17,7 @@
         <v-icon>mdi-delete</v-icon>
       </v-btn>
     </Controller>
-    <div class="d-flex flex-column pa-10 red darken-4" v-if='false'>
+    <div class="d-flex flex-column pa-10 red darken-4" v-if="false">
       <div>Length: {{ len }}</div>
       <div>First: {{ firstPoint }}</div>
       <div>Second: {{ secondPoint }}</div>
@@ -27,6 +27,7 @@
       <div>Pos: {{ posName }}</div>
       <!-- <Court v-bind="posName" height='30rem'/> -->
     </div>
+    <Broadcaster v-if='broadcast'/>
   </div>
 </template>
 
@@ -36,11 +37,12 @@ import CourtVis from "../components/CourtVisualizer";
 import Court from "../components/Court";
 import Controller from "../components/Controller";
 import PlayersForm from "../components/PlayersForm";
+import Broadcaster from "../components/Brocaster";
 
 import { mapGetters } from "vuex";
 
 export default {
-  components: { Score, CourtVis, Controller, PlayersForm },
+  components: { Score, CourtVis, Controller, PlayersForm, Broadcaster },
   props: {
     minusHeight: {
       // Will be minus from given height?
@@ -52,6 +54,9 @@ export default {
     return {
       height: "0",
       showCourt: false,
+      syncScore: true,
+      broadcaster: null,
+      broadcast: true,
     };
   },
   computed: {
@@ -70,9 +75,6 @@ export default {
     this.showCourt = true;
   },
   methods: {
-    hello() {
-      console.log("hello world.");
-    },
     getHeight() {
       this.height = `calc(${window.innerHeight - this.minusHeight}px)`;
     },

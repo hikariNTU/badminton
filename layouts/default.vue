@@ -62,12 +62,12 @@ export default {
           to: "/",
         },
         {
-          icon: "mdi-chart-bubble",
-          title: "Inspire",
-          to: "/inspire",
+          icon: "mdi-scoreboard",
+          title: "Broadcast Score",
+          to: "/broadcast-score",
         },
         {
-          icon: "mdi-scoreboard",
+          icon: "mdi-ballot",
           title: "Score",
           to: "/score",
         },

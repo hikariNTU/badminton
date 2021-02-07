@@ -3,7 +3,7 @@
     <v-dialog v-model="dialog" persistent max-width="800px" scrollable>
       <template v-slot:activator="{ on, attrs }">
         <v-btn elevation="0" color="primary" fab tile v-bind="attrs" v-on="on">
-          <v-icon>mdi-file</v-icon>
+          <v-icon>mdi-badge-account-horizontal</v-icon>
         </v-btn>
       </template>
       <v-card>
@@ -99,7 +99,7 @@
 import { merge } from "lodash";
 export default {
   data: () => ({
-    dialog: true,
+    dialog: false,
     isSingle: false,
     gender: "M",
     limit: 21,

@@ -15,12 +15,12 @@ export const state = () => ({
   limit: 21,
   deuceGap: 1,
   deuceLimit: 30,
+  // Setting: Position Status
+  swapCourt: false,
+  firstServe: -1,
   // Scoring
   prevGames: [],
   score: [],
-  // Position Status
-  swapCourt: false,
-  firstServe: -1,
 })
 
 const getPos = (isSwitch = false, isSwap = false) => {
@@ -108,6 +108,23 @@ export const mutations = {
   swap(state) {
     state.swapCourt = !state.swapCourt
   },
+  switchPos(state, who) {
+    switch (who) {
+      case 'first':
+      case 0:
+        state.first.reversed ^= 1;
+        break;
+      case 'second':
+      case 1:
+        state.second.reversed ^= 1;
+        break;
+      default:
+        console.warn(
+          `[${who}] is not valid argv for switch position.`
+        )
+        return
+    }
+  },
   writeScore(state, value) {
     state.score.push(value)
   },
@@ -135,10 +152,32 @@ export const mutations = {
     Object.assign(state, normal)
     Object.assign(state.first, restFirst)
     state.first.name.splice(0)
-    state.first.name.push(...firstName)
+    state.first.name.concat(firstName)
     Object.assign(state.second, restSecond)
     state.second.name.splice(0)
-    state.second.name.push(...secondName)
+    state.second.name.concat(secondName)
+  },
+  mergePlayer(state, { target, payload }) {
+    if (['first', 'second'].contains(target)) {
+      const { name = null, ...rest } = payload
+      if (name !== null) {
+        state[target].name.splice(0)
+        state[target].name.concat(name)
+      }
+      Object.assign(state[target], rest)
+    }
+  },
+  mergeSetting(state, payload) {
+    Object.assign(state, payload)
+  },
+  mergeScoring(state, payload) {
+    state.score.splice(0)
+    state.score.concat(payload)
+  },
+  mergePrevGames(state, payload) {
+    // Did Score Reacting?
+    state.prevGames.splice(0)
+    state.prevGames.concat(payload)
   },
   setFirstServe(state, who) {
     switch (who) {
@@ -149,6 +188,10 @@ export const mutations = {
       case 'second':
       case 1:
         state.firstServe = 1;
+        break;
+      case 'unset':
+      case -1:
+        state.firstServe = -1
         break;
       default:
         console.warn(`[${who}] is not valid argv for serving.`)
@@ -164,6 +207,7 @@ export const actions = {
       // commit('clear', 'second');
       commit('deleteScore', true);
       commit('deleteGame', true);
+      commit('setFirstServe', -1)
     } else {
       // commit('clear', who)
     }
