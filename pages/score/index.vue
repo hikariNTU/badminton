@@ -1,16 +1,21 @@
 <template>
   <div class="score-tab-container" ref="score" v-resize="getHeight">
-    <CourtVis :height="height" v-if="showCourt" />
+    <CourtVis v-if="showCourt" :height="height" :no-number="!showNumber" />
     <Broadcaster v-if="broadcast" :show-grid="showCourt" />
     <Score />
     <Controller>
       <v-btn elevation="0" fab tile @click="showCourt = !showCourt">
         <v-icon>mdi-{{ showCourt ? "grid" : "grid-off" }}</v-icon>
       </v-btn>
+      <v-btn elevation="0" fab tile @click="showNumber = !showNumber">
+        <v-icon
+          >mdi-{{ showNumber ? "crosshairs-gps" : "crosshairs-off" }}</v-icon
+        >
+      </v-btn>
       <v-btn elevation="0" fab tile @click="swap">
         <v-icon>mdi-swap-vertical-variant</v-icon>
       </v-btn>
-      <v-btn elevation="0" fab tile @click="undo">
+      <v-btn elevation="0" fab tile @click="undo" :disabled="len === 0">
         <v-icon>mdi-undo</v-icon>
       </v-btn>
       <v-btn
@@ -41,17 +46,19 @@
 </template>
 
 <script>
-import Score from "../components/Score";
-import CourtVis from "../components/CourtVisualizer";
-import Court from "../components/Court";
-import Controller from "../components/Controller";
-import PlayersForm from "../components/PlayersForm";
-import Broadcaster from "../components/Brocaster";
+import Score from "~/components/Score";
+import CourtVis from "~/components/CourtVisualizer";
+import Controller from "~/components/Controller";
+import PlayersForm from "~/components/PlayersForm";
+import Broadcaster from "~/components/Brocaster";
 
 import { mapGetters } from "vuex";
 
 export default {
   components: { Score, CourtVis, Controller, PlayersForm, Broadcaster },
+  head: {
+    title: "Scoring Center",
+  },
   props: {
     minusHeight: {
       // Will be minus from given height?
@@ -64,6 +71,7 @@ export default {
       height: "0",
       showCourt: false,
       broadcast: false,
+      showNumber: false,
     };
   },
   computed: {
@@ -111,5 +119,8 @@ export default {
   width: 100%;
   margin: 0;
   padding: 0;
+  @media screen and (max-width: 960px) {
+    flex-direction: column;
+  }
 }
 </style>

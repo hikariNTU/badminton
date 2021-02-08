@@ -105,14 +105,14 @@ export default {
     limit: 21,
     deuceLimit: 30,
     first: {
-      name: ["fasf", "hahaeh"],
-      subName: "Tai tsu in",
-      team: "ehse, erh erh",
+      name: ["", ""],
+      // subName: "Tai tsu in",
+      team: "",
     },
     second: {
-      name: ["帶姿尹", "2nd"],
-      subName: "Tai tsu in",
-      team: "台灣",
+      name: ["", ""],
+      // subName: "Tai tsu in",
+      team: "",
     },
   }),
   mounted() {

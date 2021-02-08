@@ -3,7 +3,7 @@
     <style>
       html,
       body {
-        overflow: hidden;
+        overflow: auto;
       }
     </style>
     <v-main>

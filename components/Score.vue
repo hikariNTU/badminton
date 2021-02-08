@@ -1,4 +1,3 @@
-
 <template>
   <div class="score-container">
     <template v-for="(team, who) in { first, second }">
@@ -12,11 +11,11 @@
       </div>
       <div
         class="score"
-        @click="dispatchScore(who, 1)"
-        @contextmenu.prevent="deleteScore"
+        @click="!readOnly && dispatchScore(who, 1)"
+        @contextmenu.prevent="!readOnly && deleteScore()"
         :active="servingSide === (who === 'first' ? 0 : 1)"
         :key="who + '-score'"
-        controllable
+        :controllable="readOnly ? null : true"
       >
         {{ who === "first" ? firstPoint : secondPoint }}
       </div>
@@ -92,6 +91,9 @@ $h: 100vh;
   display: grid;
   grid-template-columns: 2.5fr 0.5fr 2fr;
   grid-template-rows: 1fr 1fr;
+  @media screen and (max-width: 900px) {
+    flex-direction: column-reverse;
+  }
   > div {
     display: flex;
     justify-content: center;
@@ -129,7 +131,7 @@ $h: 100vh;
   }
   > .score {
     font-size: $h / 3;
-    line-height: 0;
+    line-height: $h / 3;
     transition: background-color 0.15s;
     &[controllable] {
       user-select: none;
@@ -150,7 +152,7 @@ $h: 100vh;
     text-align: left;
     font-size: $h/24;
     > div:nth-last-child(1) {
-      margin-top: auto;
+      margin-top: $h/24;
     }
   }
 }

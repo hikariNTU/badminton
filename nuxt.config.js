@@ -4,9 +4,14 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
+  // Router setting: https://nuxtjs.org/docs/2.x/deployment/github-pages
+  router: {
+    base: 'badminton'
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - badminton',
+    titleTemplate: '%s - Badminton App',
     title: 'badminton',
     htmlAttrs: {
       lang: 'en'
@@ -14,7 +19,7 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      { hid: 'description', name: 'description', content: 'Badminton Scoring App' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }

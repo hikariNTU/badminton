@@ -47,7 +47,7 @@ export default {
   > #control-center {
     display: flex;
     overflow: hidden;
-    max-width: calc(6 * 56px);
+    max-width: calc(7 * 56px);
     transition: max-width 0.2s;
     &.hidden {
       max-width: 0;

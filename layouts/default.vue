@@ -63,11 +63,6 @@ export default {
         },
         {
           icon: "mdi-scoreboard",
-          title: "Broadcast Score",
-          to: "/broadcast-score",
-        },
-        {
-          icon: "mdi-ballot",
           title: "Score",
           to: "/score",
         },

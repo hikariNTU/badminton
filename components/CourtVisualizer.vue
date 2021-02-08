@@ -80,7 +80,8 @@ export default {
 <style lang='scss'>
 .court-wrapper {
   position: relative;
-  &:hover {
+  &:hover,
+  &:focus-within {
     .overlay-control {
       opacity: 1;
     }

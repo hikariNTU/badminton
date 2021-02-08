@@ -1,11 +1,11 @@
 export const state = () => ({
   first: {
-    name: ['冰淇淋', '楊桃樹'],
+    name: ['綠第一人', '綠第二人'],
     team: "Green College",
     reversed: false,
   },
   second: {
-    name: ['二組接發', '二組'],
+    name: ['紅首發', '紅二發'],
     team: "Orange Apple",
     reversed: false,
   },

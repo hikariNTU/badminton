@@ -127,10 +127,9 @@ export default {
   width: calc(610 * var(--len) - 2 * var(--gap));
   height: calc(1340 * var(--len) - 2 * var(--gap));
   background: white;
-  box-sizing: padding-box;
+  box-sizing: content-box;
   padding: var(--gap);
   border: calc(40 * var(--len)) solid var(--court-color, #262);
-  box-shadow: 0 0 5px 2px #2225;
   grid-template-columns:
     calc(42 * var(--len))
     calc(253 * var(--len))

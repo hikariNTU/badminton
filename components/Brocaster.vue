@@ -1,7 +1,16 @@
 <template>
   <div class="broadcaster pa-2 elevation-5">
-    <v-icon color="green">mdi-broadcast</v-icon>
-    <span>Broadcasting Now</span>
+    <v-icon color="green" class="pa-2">mdi-broadcast</v-icon>
+    <!-- <span> -->
+    <router-link
+      :to="[$route.path, 'broadcast-score'].join('/')"
+      target="_blank"
+    >
+      <v-btn class="orange--text">
+        Broadcasting <v-icon>mdi-open-in-new</v-icon>
+      </v-btn>
+    </router-link>
+    <!-- </span> -->
   </div>
 </template>
 
@@ -43,6 +52,7 @@ export default {
   data() {
     return {
       broadcaster: null,
+      openHandler: null,
     };
   },
   computed: {
@@ -53,18 +63,28 @@ export default {
     this.broadcaster.onmessage = ({ data }) => {
       console.log("[CONSOLE]: ", data);
       const { type = "", payload = "" } = data;
-      if (type === "REQUEST_SYNC") {
-        this.syncScore();
-        this.syncFirst();
-        this.syncSecond();
-        this.syncGeneralSetting();
-        this.syncPrevGames();
+      switch (type) {
+        case "REQUEST_SYNC":
+          this.syncScore();
+          this.syncFirst();
+          this.syncSecond();
+          this.syncGeneralSetting();
+          this.syncPrevGames();
+          this.clearOpener();
+          break;
+        default:
+          break;
       }
     };
     this.broadcaster.postMessage({
       type: "SRV_EST",
       payload: "Broadcast Server is establish and running.",
     });
+    // Open New Broad Cast window if none of one receiver response with sync command.
+    const self = this;
+    this.openHandler = setTimeout(function () {
+      window.open([self.$route.path, "broadcast-score"].join("/"), '_blank');
+    }, 500);
   },
   watch: {
     "$store.state.current.score": {
@@ -99,10 +119,17 @@ export default {
     syncSecond: posterFactory("second"),
     syncGeneralSetting: posterFactory("generalSetting", "getters"),
     syncPrevGames: posterFactory("prevGames"),
+    clearOpener() {
+      if (this.openHandler) {
+        window.clearTimeout(this.openHandler);
+        this.openHandler = null;
+      }
+    },
     cleanUp() {
       if (this.broadcaster?.close) {
         this.broadcaster.close();
       }
+      this.clearOpener();
     },
   },
   destroyed() {
@@ -112,8 +139,37 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@keyframes blink-in {
+  from {
+    opacity: 0;
+  }
+  7% {
+    opacity: 1;
+  }
+  15% {
+    opacity: 1;
+  }
+  30% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .broadcaster {
   display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 1rem;
   left: 1rem;
@@ -121,13 +177,23 @@ export default {
   border-radius: 100vh;
   background: #222;
   color: #eee;
-  > span {
-    display: none;
-    margin: 0 0.5rem;
+  animation: 0.3s 1 normal linear blink-in;
+  // transition: opacity 0.2s;
+  > a {
+    display: block;
+    // margin-right: 1rem;
+    text-decoration: none;
+    overflow: hidden;
+    max-width: 0px;
   }
-  &:hover {
-    > span {
-      display: unset;
+  &:hover,
+  &:focus,
+  &:focus-within,
+  &:focus-visible {
+    opacity: 1;
+    > a {
+      margin-right: 1rem;
+      max-width: unset;
     }
   }
 }
