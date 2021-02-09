@@ -1,17 +1,22 @@
 <template>
-  <div class="broadcaster pa-2 elevation-5">
-    <v-icon color="green" class="pa-2">mdi-broadcast</v-icon>
-    <!-- <span> -->
-    <router-link
-      :to="[$route.path, 'broadcast-score'].join('/')"
-      target="_blank"
-    >
-      <v-btn class="orange--text">
-        Broadcasting <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </router-link>
-    <!-- </span> -->
-  </div>
+  <v-sheet class="broadcaster pa-2 elevation-5">
+    <template v-if="available">
+      <v-icon color="green" class="pa-2 spin">mdi-autorenew</v-icon>
+      <router-link
+        :to="[$route.path, 'broadcast-score'].join('/')"
+        target="_blank"
+      >
+        <v-btn class="green--text">
+          Broadcasting <v-icon class="ml-2">mdi-open-in-new</v-icon>
+        </v-btn>
+      </router-link>
+    </template>
+    <template v-else>
+      <strong class="warning--text rounded px-1 mx-5">
+        BroadcastChannel is not available in this browser.
+      </strong>
+    </template>
+  </v-sheet>
 </template>
 
 <script>
@@ -52,6 +57,7 @@ export default {
   data() {
     return {
       broadcaster: null,
+      available: true,
       openHandler: null,
     };
   },
@@ -59,32 +65,38 @@ export default {
     ...mapGetters("current", ["generalSetting"]),
   },
   mounted() {
-    this.broadcaster = new BroadcastChannel("BMT_scoring_channel");
-    this.broadcaster.onmessage = ({ data }) => {
-      console.log("[CONSOLE]: ", data);
-      const { type = "", payload = "" } = data;
-      switch (type) {
-        case "REQUEST_SYNC":
-          this.syncScore();
-          this.syncFirst();
-          this.syncSecond();
-          this.syncGeneralSetting();
-          this.syncPrevGames();
-          this.clearOpener();
-          break;
-        default:
-          break;
-      }
-    };
-    this.broadcaster.postMessage({
-      type: "SRV_EST",
-      payload: "Broadcast Server is establish and running.",
-    });
-    // Open New Broad Cast window if none of one receiver response with sync command.
-    const self = this;
-    this.openHandler = setTimeout(function () {
-      window.open([self.$route.path, "broadcast-score"].join("/"), '_blank');
-    }, 500);
+    if ("BroadcastChannel" in window) {
+      this.broadcaster = new BroadcastChannel("BMT_scoring_channel");
+      this.broadcaster.onmessage = ({ data }) => {
+        console.log("[CONSOLE]: ", data);
+        const { type = "", payload = "" } = data;
+        switch (type) {
+          case "REQUEST_SYNC":
+            this.syncScore();
+            this.syncFirst();
+            this.syncSecond();
+            this.syncGeneralSetting();
+            this.syncPrevGames();
+            this.clearOpener();
+            break;
+          default:
+            break;
+        }
+      };
+      this.broadcaster.postMessage({
+        type: "SRV_EST",
+        payload: "Broadcast Server is establish and running.",
+      });
+      // Open New Broad Cast window if none of one receiver response with sync command.
+      this.openHandler = setTimeout(function () {
+        window.open(
+          [document.location.href, "broadcast-score"].join("/"),
+          "_blank"
+        );
+      }, 500);
+    } else {
+      this.available = false;
+    }
   },
   watch: {
     "$store.state.current.score": {
@@ -139,6 +151,14 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 @keyframes blink-in {
   from {
     opacity: 0;
@@ -147,10 +167,10 @@ export default {
     opacity: 1;
   }
   15% {
-    opacity: 1;
+    opacity: 0;
   }
   30% {
-    opacity: 0;
+    opacity: 1;
   }
   40% {
     opacity: 0;
@@ -165,8 +185,11 @@ export default {
     opacity: 1;
   }
 }
-
+.spin {
+  animation: spin 2s linear infinite;
+}
 .broadcaster {
+  width: unset;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -175,9 +198,9 @@ export default {
   left: 1rem;
   border: solid #eee4 2px;
   border-radius: 100vh;
-  background: #222;
+  // background: #222;
   color: #eee;
-  animation: 0.3s 1 normal linear blink-in;
+  animation: 0.5s 1 normal linear blink-in;
   // transition: opacity 0.2s;
   > a {
     display: block;

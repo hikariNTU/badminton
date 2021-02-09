@@ -2,15 +2,15 @@
   <div class="score-tab-container" ref="score" v-resize="getHeight">
     <CourtVis v-if="showCourt" :height="height" :no-number="!showNumber" />
     <Broadcaster v-if="broadcast" :show-grid="showCourt" />
-    <Score />
+    <Score :opaque="$vuetify.theme.dark" />
     <Controller>
       <v-btn elevation="0" fab tile @click="showCourt = !showCourt">
         <v-icon>mdi-{{ showCourt ? "grid" : "grid-off" }}</v-icon>
       </v-btn>
       <v-btn elevation="0" fab tile @click="showNumber = !showNumber">
-        <v-icon
-          >mdi-{{ showNumber ? "crosshairs-gps" : "crosshairs-off" }}</v-icon
-        >
+        <v-icon>
+          mdi-{{ showNumber ? "crosshairs-gps" : "crosshairs-off" }}
+        </v-icon>
       </v-btn>
       <v-btn elevation="0" fab tile @click="swap">
         <v-icon>mdi-swap-vertical-variant</v-icon>

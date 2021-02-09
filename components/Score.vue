@@ -1,5 +1,5 @@
 <template>
-  <div class="score-container">
+  <div :class="{ 'score-container': true, opaque }">
     <template v-for="(team, who) in { first, second }">
       <div class="name" :key="who + '-name'">
         <div>{{ team.name.join(" | ") }}</div>
@@ -31,6 +31,10 @@ export default {
   props: {
     readOnly: {
       default: false,
+      type: Boolean,
+    },
+    opaque: {
+      default: true,
       type: Boolean,
     },
   },
@@ -84,10 +88,14 @@ export default {
 $h: 100vh;
 
 .score-container {
+  &.opaque {
+    background: #222;
+    color: greenyellow;
+  }
   width: 100%;
   height: 100%;
-  background: #222;
-  color: greenyellow;
+  background: #2221;
+  color: green;
   display: grid;
   grid-template-columns: 2.5fr 0.5fr 2fr;
   grid-template-rows: 1fr 1fr;

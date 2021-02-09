@@ -1,5 +1,5 @@
 <template>
-  <div id="controller">
+  <v-sheet id="controller">
     <v-btn elevation="0" fab tile @click="toggleVisible">
       <v-icon>mdi-unfold-{{ visible ? "less" : "more" }}-vertical</v-icon>
     </v-btn>
@@ -11,7 +11,7 @@
     >
       <slot />
     </div>
-  </div>
+  </v-sheet>
 </template>
 
 <script>

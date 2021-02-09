@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app>
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -32,6 +32,9 @@
       <v-btn icon @click.stop="clipped = !clipped">
         <v-icon>mdi-application</v-icon>
       </v-btn>
+      <v-btn icon @click.stop="$vuetify.theme.dark ^= true">
+        <v-icon>mdi-theme-light-dark</v-icon>
+      </v-btn>
       <v-btn icon @click.stop="fixed = !fixed">
         <v-icon>mdi-minus</v-icon>
       </v-btn>
@@ -57,7 +60,7 @@ export default {
       fixed: false,
       items: [
         {
-          icon: "mdi-apps",
+          icon: "mdi-badminton",
           title: "Welcome",
           to: "/",
         },
@@ -65,6 +68,11 @@ export default {
           icon: "mdi-scoreboard",
           title: "Score",
           to: "/score",
+        },
+        {
+          icon: "mdi-book-open-outline",
+          title: "Laws",
+          to: "/laws",
         },
       ],
       miniVariant: true,
