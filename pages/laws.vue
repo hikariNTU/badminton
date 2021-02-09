@@ -1,153 +1,159 @@
 <template>
   <v-container lang="en-us" class="laws-container">
-    <p>
+    <header>
+      <sub>BWF Statutes, Section 4.1:</sub>
+      <h1 id="LAWS-OF-BADMINTON" data-id="LAWS-OF-BADMINTON">
+        LAWS OF BADMINTON
+      </h1>
+    </header>
+    <div class="d-flex mb-3 align-end">
+      <dl class="timestamp">
+        <dt>In Force</dt>
+        <dd>2019-05-31</dd>
+      </dl>
+      <v-spacer></v-spacer>
       <v-btn
-        href="https://system.bwfbadminton.com/documents/folder_1_81/Regulations/Laws/Part%20II%20Section%201A%20-%20Laws%20of%20Badminton%20-%20June%202016%20Revised%202.pdf"
+        href="https://extranet.bwfbadminton.com/docs/document-system/81/1466/1470/Section%204.1%20-%20Laws%20of%20Badminton.pdf"
         target="_blank"
         rel="noopener"
         tag="a"
-        title="Official Law Appendix from BWF"
+        title="Official Law Appendix from BWF in PDF format"
       >
         BWF Official Laws link <v-icon class="ml-2">mdi-open-in-new</v-icon>
       </v-btn>
-    </p>
-    <small>2021/02/9</small>
-    <p>
-      <span class="toc"
-        ><ul>
-          <li>
-            <nuxt-link to="#LAWS-OF-BADMINTON" title="LAWS OF BADMINTON"
-              >LAWS OF BADMINTON</nuxt-link
-            >
-            <ul>
-              <li>
-                <nuxt-link to="#DEFINITIONS" title="DEFINITIONS"
-                  >DEFINITIONS</nuxt-link
-                >
-              </li>
-              <li>
-                <nuxt-link
-                  to="#1-COURT-AND-COURT-EQUIPMENT"
-                  title="1. COURT AND COURT EQUIPMENT"
-                  >1. COURT AND COURT EQUIPMENT</nuxt-link
-                >
-              </li>
-              <li>
-                <nuxt-link to="#2-SHUTTLE" title="2. SHUTTLE"
-                  >2. SHUTTLE</nuxt-link
-                >
-              </li>
-              <li>
-                <nuxt-link
-                  to="#3-TESTING-A-SHUTTLE-FOR-SPEED"
-                  title="3. TESTING A SHUTTLE FOR SPEED"
-                  >3. TESTING A SHUTTLE FOR SPEED</nuxt-link
-                >
-              </li>
-              <li>
-                <nuxt-link to="#4-RACKET" title="4. RACKET"
-                  >4. RACKET</nuxt-link
-                >
-              </li>
-              <li>
-                <nuxt-link
-                  to="#5-EQUIPMENT-AND-COMPLIANCE"
-                  title="5. EQUIPMENT AND COMPLIANCE"
-                  >5. EQUIPMENT AND COMPLIANCE</nuxt-link
-                >
-              </li>
-              <li>
-                <nuxt-link to="#6-TOSS" title="6. TOSS">6. TOSS</nuxt-link>
-              </li>
-              <li>
-                <nuxt-link to="#7-SCORING-SYSTEM" title="7. SCORING SYSTEM">
-                  7. SCORING SYSTEM
-                </nuxt-link>
-              </li>
-              <li>
-                <nuxt-link to="#8-CHANGE-OF-ENDS" title="8. CHANGE OF ENDS"
-                  >8. CHANGE OF ENDS</nuxt-link
-                >
-              </li>
-              <li>
-                <nuxt-link to="#9-SERVICE" title="9. SERVICE"
-                  >9. SERVICE</nuxt-link
-                >
-              </li>
-              <li>
-                <nuxt-link to="#10-SINGLES" title="10. SINGLES"
-                  >10. SINGLES</nuxt-link
-                >
-              </li>
-              <li>
-                <nuxt-link to="#11-DOUBLES" title="11. DOUBLES"
-                  >11. DOUBLES</nuxt-link
-                >
-              </li>
-              <li>
-                <nuxt-link
-                  to="#12-SERVICE-COURT-ERRORS"
-                  title="12. SERVICE COURT ERRORS"
-                  >12. SERVICE COURT ERRORS</nuxt-link
-                >
-              </li>
-              <li>
-                <nuxt-link to="#13-FAULTS" title="13. FAULTS"
-                  >13. FAULTS</nuxt-link
-                >
-              </li>
-              <li>
-                <nuxt-link to="#14-LETS" title="14. LETS">14. LETS</nuxt-link>
-              </li>
-              <li>
-                <nuxt-link
-                  to="#15-SHUTTLE-NOT-IN-PLAY"
-                  title="15. SHUTTLE NOT IN PLAY"
-                  >15. SHUTTLE NOT IN PLAY</nuxt-link
-                >
-              </li>
-              <li>
-                <nuxt-link
-                  to="#16-CONTINUOUS-PLAY-MISCONDUCT-amp-PENALTIES"
-                  title="16. CONTINUOUS PLAY, MISCONDUCT &amp; PENALTIES"
-                  >16. CONTINUOUS PLAY, MISCONDUCT &amp; PENALTIES</nuxt-link
-                >
-              </li>
-              <li>
-                <nuxt-link
-                  to="#17-OFFICIALS-AND-APPEALS"
-                  title="17. OFFICIALS AND APPEALS"
-                  >17. OFFICIALS AND APPEALS</nuxt-link
-                >
-              </li>
-              <li>
-                <nuxt-link to="#APPENDIX" title="APPENDIX">APPENDIX</nuxt-link>
-                <ul>
-                  <li>
-                    <nuxt-link to="#DIAGRAM-D" title="DIAGRAM D"
-                      >DIAGRAM D</nuxt-link
-                    >
-                  </li>
-                  <li>
-                    <nuxt-link to="#DIAGRAM-E" title="DIAGRAM E"
-                      >DIAGRAM E</nuxt-link
-                    >
-                  </li>
-                  <li>
-                    <nuxt-link to="#DIAGRAM-F" title="DIAGRAM F"
-                      >DIAGRAM F</nuxt-link
-                    >
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </span>
-    </p>
-    <h1 id="LAWS-OF-BADMINTON" data-id="LAWS-OF-BADMINTON">
-      <span>LAWS OF BADMINTON</span>
-    </h1>
+    </div>
+
+    <div class="toc" role="contentinfo">
+      <label>Table of Content</label>
+      <ul>
+        <li>
+          <nuxt-link to="#LAWS-OF-BADMINTON" title="LAWS OF BADMINTON"
+            >LAWS OF BADMINTON</nuxt-link
+          >
+          <ul>
+            <li>
+              <nuxt-link to="#DEFINITIONS" title="DEFINITIONS"
+                >DEFINITIONS</nuxt-link
+              >
+            </li>
+            <li>
+              <nuxt-link
+                to="#1-COURT-AND-COURT-EQUIPMENT"
+                title="1. COURT AND COURT EQUIPMENT"
+                >1. COURT AND COURT EQUIPMENT</nuxt-link
+              >
+            </li>
+            <li>
+              <nuxt-link to="#2-SHUTTLE" title="2. SHUTTLE"
+                >2. SHUTTLE</nuxt-link
+              >
+            </li>
+            <li>
+              <nuxt-link
+                to="#3-TESTING-A-SHUTTLE-FOR-SPEED"
+                title="3. TESTING A SHUTTLE FOR SPEED"
+                >3. TESTING A SHUTTLE FOR SPEED</nuxt-link
+              >
+            </li>
+            <li>
+              <nuxt-link to="#4-RACKET" title="4. RACKET">4. RACKET</nuxt-link>
+            </li>
+            <li>
+              <nuxt-link
+                to="#5-EQUIPMENT-AND-COMPLIANCE"
+                title="5. EQUIPMENT AND COMPLIANCE"
+                >5. EQUIPMENT AND COMPLIANCE</nuxt-link
+              >
+            </li>
+            <li>
+              <nuxt-link to="#6-TOSS" title="6. TOSS">6. TOSS</nuxt-link>
+            </li>
+            <li>
+              <nuxt-link to="#7-SCORING-SYSTEM" title="7. SCORING SYSTEM">
+                7. SCORING SYSTEM
+              </nuxt-link>
+            </li>
+            <li>
+              <nuxt-link to="#8-CHANGE-OF-ENDS" title="8. CHANGE OF ENDS"
+                >8. CHANGE OF ENDS</nuxt-link
+              >
+            </li>
+            <li>
+              <nuxt-link to="#9-SERVICE" title="9. SERVICE"
+                >9. SERVICE</nuxt-link
+              >
+            </li>
+            <li>
+              <nuxt-link to="#10-SINGLES" title="10. SINGLES"
+                >10. SINGLES</nuxt-link
+              >
+            </li>
+            <li>
+              <nuxt-link to="#11-DOUBLES" title="11. DOUBLES"
+                >11. DOUBLES</nuxt-link
+              >
+            </li>
+            <li>
+              <nuxt-link
+                to="#12-SERVICE-COURT-ERRORS"
+                title="12. SERVICE COURT ERRORS"
+                >12. SERVICE COURT ERRORS</nuxt-link
+              >
+            </li>
+            <li>
+              <nuxt-link to="#13-FAULTS" title="13. FAULTS"
+                >13. FAULTS</nuxt-link
+              >
+            </li>
+            <li>
+              <nuxt-link to="#14-LETS" title="14. LETS">14. LETS</nuxt-link>
+            </li>
+            <li>
+              <nuxt-link
+                to="#15-SHUTTLE-NOT-IN-PLAY"
+                title="15. SHUTTLE NOT IN PLAY"
+                >15. SHUTTLE NOT IN PLAY</nuxt-link
+              >
+            </li>
+            <li>
+              <nuxt-link
+                to="#16-CONTINUOUS-PLAY-MISCONDUCT-amp-PENALTIES"
+                title="16. CONTINUOUS PLAY, MISCONDUCT &amp; PENALTIES"
+                >16. CONTINUOUS PLAY, MISCONDUCT &amp; PENALTIES</nuxt-link
+              >
+            </li>
+            <li>
+              <nuxt-link
+                to="#17-OFFICIALS-AND-APPEALS"
+                title="17. OFFICIALS AND APPEALS"
+                >17. OFFICIALS AND APPEALS</nuxt-link
+              >
+            </li>
+            <li>
+              <nuxt-link to="#APPENDIX" title="APPENDIX">APPENDIX</nuxt-link>
+              <ul>
+                <li>
+                  <nuxt-link to="#DIAGRAM-D" title="DIAGRAM D"
+                    >DIAGRAM D</nuxt-link
+                  >
+                </li>
+                <li>
+                  <nuxt-link to="#DIAGRAM-E" title="DIAGRAM E"
+                    >DIAGRAM E</nuxt-link
+                  >
+                </li>
+                <li>
+                  <nuxt-link to="#DIAGRAM-F" title="DIAGRAM F"
+                    >DIAGRAM F</nuxt-link
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
     <h2 id="DEFINITIONS" data-id="DEFINITIONS"><span>DEFINITIONS</span></h2>
     <table>
       <thead>
@@ -216,6 +222,7 @@
         </tr>
       </tbody>
     </table>
+    <br />
     <p>
       <em><span>The clauses in italics apply to Para-badminton only.</span></em>
     </p>
@@ -287,9 +294,9 @@
         <p>
           <span
             >The net shall be made of fine cord of dark colour and even
-            thickness with a mesh of not less than l</span
-          ><br />
-          <span>mm and not more than 20 mm.</span>
+            thickness with a mesh of not less than 15 mm and not more than 20
+            mm.</span
+          >
         </p>
       </li>
       <li>
@@ -816,11 +823,18 @@
           </li>
           <li>
             <p>
+              <s
+                ><span
+                  >the whole shuttle shall be below the server’s waist at the
+                  instant of being hit by the server’s racket. The waist shall
+                  be considered to be an imaginary line round the body, level
+                  with the lowest part of the server’s bottom rib;</span
+                ></s
+              ><br />
               <span
-                >the whole shuttle shall be below the server’s waist at the
-                instant of being hit by the server’s racket. The waist shall be
-                considered to be an imaginary line round the body, level with
-                the lowest part of the server’s bottom rib;</span
+                >the whole shuttle shall be below 1.15 metres from the surface
+                of the court at the instant of being hit by the server’s
+                racket;</span
               >
             </p>
             <ol>
@@ -837,55 +851,50 @@
               </li>
               <li>
                 <p>
-                  <em
-                    ><strong
-                      ><span
-                        >For Fixed Height Experiment: The whole of the shuttle
-                        shall be below 1.10 metres from the surface of the court
-                        at the instant of being hit by the server’s
-                        racket.</span
-                      ></strong
-                    ></em
+                  <s
+                    ><span
+                      >For Fixed Height Experiment: The whole of the shuttle
+                      shall be below 1.10 metres from the surface of the court
+                      at the instant of being hit by the server’s racket.</span
+                    ></s
                   >
                 </p>
               </li>
             </ol>
           </li>
+        </ol>
+        <p>
+          <s><span>7.</span></s
+          ><span> </span
+          ><s
+            ><span
+              >the shaft and the racket head of the server’s racket at the
+              instant of hitting the shuttle shall be pointing in a downward
+              direction;</span
+            ></s
+          >
+        </p>
+        <ol start="7">
           <li>
-            <p>
-              <span
-                >the shaft and the racket head of the server’s racket at the
-                instant of hitting the shuttle shall be pointing in a downward
-                direction;</span
-              >
-            </p>
+            <span
+              >the movement of the server’s racket shall continue forwards from
+              the start of the service (Law 9.2) until the service is delivered
+              (Law 9.3);</span
+            >
           </li>
           <li>
-            <p>
-              <span
-                >the movement of the server’s racket shall continue forwards
-                from the start of the service (Law 9.2) until the service is
-                delivered (Law 9.3);</span
-              >
-            </p>
+            <span
+              >the flight of the shuttle shall be upwards from the server’s
+              racket to pass over the net so that, if not intercepted, it shall
+              land in the receiver’s service court (i.e. on or within the
+              boundary lines); and</span
+            >
           </li>
           <li>
-            <p>
-              <span
-                >the flight of the shuttle shall be upwards from the server’s
-                racket to pass over the net so that, if not intercepted, it
-                shall land in the receiver’s service court (i.e. on or within
-                the boundary lines); and</span
-              >
-            </p>
-          </li>
-          <li>
-            <p>
-              <span
-                >in attempting to serve, the server shall not miss the
-                shuttle.</span
-              >
-            </p>
+            <span
+              >in attempting to serve, the server shall not miss the
+              shuttle.</span
+            >
           </li>
         </ol>
       </li>
@@ -1820,7 +1829,7 @@ export default {};
 }
 h1 {
   // color: #eee;
-  margin: 2rem 0;
+  margin-bottom: 2rem;
   font-family: "Times New Roman", Times, serif;
 }
 th {
@@ -1834,10 +1843,12 @@ h2 {
   padding-left: 1.5rem;
   font-family: "Times New Roman", Times, serif;
 }
-img{
+img {
   border: #6666 solid 0.1rem;
   border-radius: 0.5rem;
   box-shadow: 0 0 5px 1px #6666;
+  width: 100%;
+  margin: 1rem 0;
 }
 ol {
   margin-left: 1.2em;
@@ -1853,6 +1864,15 @@ ol {
   align-items: center;
   text-align: center;
   border-radius: 0.5rem;
-
+}
+.timestamp {
+  font-size: 0.75em;
+  display: flex;
+  > dt {
+    margin-right: 1rem;
+    &::after {
+      content: ":";
+    }
+  }
 }
 </style>
