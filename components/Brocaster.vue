@@ -200,7 +200,7 @@ export default {
   border-radius: 100vh;
   // background: #222;
   color: #eee;
-  animation: 0.5s 1 normal linear blink-in;
+  animation: 0.8s 1 normal linear blink-in;
   // transition: opacity 0.2s;
   > a {
     display: block;

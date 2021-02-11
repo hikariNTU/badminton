@@ -10,7 +10,7 @@
     />
     <div class="overlay-control" :display="displayOnly ? true : null">
       <template v-if="!displayOnly">
-        <v-btn fab @click="switchPos(0 ^ swapCourt)">
+        <v-btn fab :disabled="isSingle" @click="switchPos(0 ^ swapCourt)">
           <v-icon>mdi-swap-horizontal</v-icon>
         </v-btn>
         <v-btn v-if="len === 0" fab @click="setFirstServe(0 ^ swapCourt)">
@@ -22,7 +22,7 @@
         <v-btn v-if="len === 0" fab @click="setFirstServe(1 ^ swapCourt)">
           <v-icon>mdi-badminton</v-icon>
         </v-btn>
-        <v-btn fab @click="switchPos(1 ^ swapCourt)">
+        <v-btn fab :disabled="isSingle" @click="switchPos(1 ^ swapCourt)">
           <v-icon>mdi-swap-horizontal</v-icon>
         </v-btn>
       </template>

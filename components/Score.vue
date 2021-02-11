@@ -66,6 +66,7 @@ export default {
       return this.$store.state.current.second;
     },
     ...mapGetters("current", [
+      "len",
       "firstPoint",
       "secondPoint",
       "firstGamePoint",
@@ -75,6 +76,9 @@ export default {
   },
   methods: {
     dispatchScore(who, value = 1) {
+      if (this.len === 0 && this.servingSide === -1) {
+        this.$emit("request-serving-side");
+      }
       this.$store.dispatch("current/gainScore", who);
     },
     deleteScore() {
@@ -99,9 +103,7 @@ $h: 100vh;
   display: grid;
   grid-template-columns: 2.5fr 0.5fr 2fr;
   grid-template-rows: 1fr 1fr;
-  @media screen and (max-width: 900px) {
-    flex-direction: column-reverse;
-  }
+
   > div {
     display: flex;
     justify-content: center;
@@ -116,11 +118,22 @@ $h: 100vh;
         background: #cefb8a;
       }
     }
-    &:nth-last-child(1)[active] {
+    &:nth-child(6)[active] {
       color: #000;
       background: orangered;
       &[controllable]:hover {
         background: #ff9873;
+      }
+    }
+    @media screen and (max-width: 900px) {
+      &:nth-child(3),
+      &:nth-child(6) {
+        grid-column: span 2;
+      }
+      &:nth-child(1),
+      &:nth-child(4) {
+        align-items: center;
+        grid-column: span 3;
       }
     }
   }

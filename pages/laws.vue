@@ -1,13 +1,13 @@
 <template>
-  <v-container lang="en-us" class="laws-container">
+  <v-container lang="en-us" class="laws-container" v-once>
     <header>
       <sub>BWF Statutes, Section 4.1:</sub>
       <h1 id="LAWS-OF-BADMINTON" data-id="LAWS-OF-BADMINTON">
         LAWS OF BADMINTON
       </h1>
     </header>
-    <div class="d-flex mb-3 align-end">
-      <dl class="timestamp">
+    <div class="d-flex flex-column-reverse flex-sm-row mb-3 align-end">
+      <dl class="timestamp flex-sm-row align-self-start">
         <dt>In Force</dt>
         <dd>2019-05-31</dd>
       </dl>
@@ -1786,6 +1786,12 @@ export default {};
 <style lang='scss' scoped>
 .laws-container {
   font-size: 1.5em;
+  @media screen and (max-width: 600px) {
+    font-size: 1.2em;
+  }
+  @media screen and (max-width: 400px) {
+    font-size: 1em;
+  }
   font-family: "Times New Roman", Times, serif;
   max-inline-size: 960px;
 }

@@ -1,6 +1,6 @@
 <template>
   <v-sheet id="controller">
-    <v-btn elevation="0" fab tile @click="toggleVisible">
+    <v-btn depressed fab tile @click="toggleVisible">
       <v-icon>mdi-unfold-{{ visible ? "less" : "more" }}-vertical</v-icon>
     </v-btn>
     <div
@@ -35,21 +35,25 @@ export default {
 
 <style lang='scss' scope>
 #controller {
-  position: absolute;
+  position: fixed;
   display: flex;
-  bottom: 1rem;
-  left: 50%;
+  bottom: 2.5rem;
+  // left: 50%;
   margin: 0;
   padding: 0;
   color: white;
   outline: #aaa solid 2px;
-  transform: translateX(-50%);
+  // transform: translateX(-50%);
   > #control-center {
     display: flex;
+    @media screen and(max-width: 8 * 56px) {
+      flex-wrap: wrap;
+    }
     overflow: hidden;
-    max-width: calc(7 * 56px);
+    max-width: calc(8 * 56px);
     transition: max-width 0.2s;
     &.hidden {
+      flex-wrap: nowrap;
       max-width: 0;
     }
   }

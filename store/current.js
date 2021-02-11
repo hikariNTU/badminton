@@ -40,10 +40,10 @@ const getPos = (isSwitch = false, isSwap = false) => {
   }
 }
 
-const swapCalculator = target => (acc, current, idx, arr) => {
+const swapCalculator = target => firstServe => (acc, current, idx, arr) => {
   // Calculate exchange position from given score list.
   if (current === target) {
-    const last = idx ? arr[idx - 1] : state.firstServe;
+    const last = idx ? arr[idx - 1] : firstServe;
     if (last === current) {
       acc ^= 1
     }
@@ -77,8 +77,8 @@ export const getters = {
       }, 0)
   },
   secondGamePoint: (state, getters) => state.prevGames.length - getters.firstGamePoint,
-  firstSwap: (state) => state.score.reduce(firstSwapCalc, 0),
-  secondSwap: (state) => state.score.reduce(secondSwapCalc, 0),
+  firstSwap: (state) => state.score.reduce(firstSwapCalc(state.firstServe), 0),
+  secondSwap: (state) => state.score.reduce(secondSwapCalc(state.firstServe), 0),
   servingSide: (state, getters) => {
     return getters.len ? state.score[getters.len - 1] : state.firstServe
   },
