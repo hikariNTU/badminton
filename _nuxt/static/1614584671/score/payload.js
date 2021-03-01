@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/score", {data:[{}],fetch:[],mutations:[]});
