@@ -6,7 +6,17 @@ export default {
 
   // Router setting: https://nuxtjs.org/docs/2.x/deployment/github-pages
   router: {
-    base: '/badminton/'
+    base: '/badminton/',
+    scrollBehavior: (to, from, savedPosition) => {
+      if (to.hash) {
+        return {
+          selector: to.hash,
+          offset: { x: 0, y: 64 },
+          behavior: 'smooth',
+        }
+      }
+    },
+
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -47,13 +57,17 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxt/content'
   ],
+  content: {
+    liveEdit: false
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,
